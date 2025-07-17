@@ -5,13 +5,14 @@ import { apiService, handleApiError } from '../services/api';
 import { SongCard } from '../components/SongCard';
 import { LoadingSpinner } from '../components/LoadingSpinner';
 import { ErrorMessage } from '../components/ErrorMessage';
-import { Play, TrendingUp, Shuffle, Music, Languages, Search } from 'lucide-react';
+import { Play, TrendingUp, Shuffle, Music, Languages, Search, Radio, Star } from 'lucide-react';
 
 export const Home = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [trendingSongs, setTrendingSongs] = useState([]);
   const [randomSongs, setRandomSongs] = useState([]);
+  const [freeMusicTracks, setFreeMusicTracks] = useState([]);
   const [languages, setLanguages] = useState([]);
   const [stats, setStats] = useState({});
 
@@ -30,6 +31,14 @@ export const Home = () => {
         setTrendingSongs(trendingResponse.data.data);
         setRandomSongs(randomResponse.data.data);
         setLanguages(languagesResponse.data.data);
+
+        // Fetch some free music tracks
+        try {
+          const freeMusicResponse = await apiService.getPopularTracks({ service: 'jamendo', limit: 6 });
+          setFreeMusicTracks(freeMusicResponse.data.data);
+        } catch (freeMusicError) {
+          console.log('Free music not available:', freeMusicError);
+        }
 
         // Calculate stats
         setStats({
@@ -80,6 +89,13 @@ export const Home = () => {
               Browse Songs
             </Link>
             <Link
+              to="/free-music"
+              className="inline-flex items-center px-6 py-3 bg-green-500 text-white rounded-lg font-medium hover:bg-green-600 transition-colors"
+            >
+              <Radio className="h-5 w-5 mr-2" />
+              Free Music
+            </Link>
+            <Link
               to="/search"
               className="inline-flex items-center px-6 py-3 bg-primary-700 text-white rounded-lg font-medium hover:bg-primary-800 transition-colors"
             >
@@ -128,6 +144,56 @@ export const Home = () => {
           ))}
         </div>
       </section>
+
+      {/* Free Music Section */}
+      {freeMusicTracks.length > 0 && (
+        <section>
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-bold text-gray-800 flex items-center">
+              <Radio className="h-6 w-6 mr-2 text-green-500" />
+              Free Music from Jamendo
+            </h2>
+            <Link
+              to="/free-music"
+              className="text-green-600 hover:text-green-700 font-medium"
+            >
+              Browse All Free Music
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {freeMusicTracks.map((track) => (
+              <div key={track.id} className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow">
+                <div className="flex items-start space-x-4">
+                  <div className="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center flex-shrink-0">
+                    {track.poster ? (
+                      <img 
+                        src={track.poster} 
+                        alt={track.title}
+                        className="w-full h-full object-cover rounded-lg"
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                        }}
+                      />
+                    ) : (
+                      <Music className="w-8 h-8 text-gray-400" />
+                    )}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-semibold text-gray-900 truncate">{track.title}</h3>
+                    <p className="text-sm text-gray-600 truncate">{track.artist}</p>
+                    <div className="flex items-center space-x-2 mt-2">
+                      <span className="text-xs text-gray-500">{track.duration}</span>
+                      <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">
+                        {track.source}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Trending Songs Section */}
       <section>

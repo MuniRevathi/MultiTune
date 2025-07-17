@@ -8,6 +8,7 @@ require('dotenv').config();
 const config = require('./config/config');
 const songService = require('./services/songService');
 const songRoutes = require('./routes/songRoutes');
+const freeMusicRoutes = require('./routes/freeMusicRoutes');
 const { validateSearchQuery, createRateLimiter } = require('./middleware/validation');
 
 const app = express();
@@ -43,6 +44,7 @@ app.use('/audio', express.static(path.join(__dirname, 'audio'), {
 
 // API Routes
 app.use('/api/songs', songRoutes);
+app.use('/api/free-music', freeMusicRoutes);
 
 // Root endpoint
 app.get('/', (req, res) => {

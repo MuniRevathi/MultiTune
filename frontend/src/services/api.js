@@ -39,7 +39,7 @@ export const apiService = {
   // Health check
   healthCheck: () => api.get('/health'),
 
-  // Songs
+  // Songs (Local/Original)
   getAllSongs: (filters = {}) => {
     const params = new URLSearchParams();
     if (filters.language) params.append('language', filters.language);
@@ -47,6 +47,53 @@ export const apiService = {
     if (filters.year) params.append('year', filters.year);
     
     return api.get(`/songs?${params.toString()}`);
+  },
+
+  // Free Music APIs
+  freeMusicSearch: (query, options = {}) => {
+    const params = new URLSearchParams();
+    params.append('q', query);
+    if (options.service) params.append('service', options.service);
+    if (options.limit) params.append('limit', options.limit);
+    if (options.offset) params.append('offset', options.offset);
+    
+    return api.get(`/free-music/search?${params.toString()}`);
+  },
+
+  getPopularTracks: (options = {}) => {
+    const params = new URLSearchParams();
+    if (options.service) params.append('service', options.service);
+    if (options.limit) params.append('limit', options.limit);
+    
+    return api.get(`/free-music/popular?${params.toString()}`);
+  },
+
+  getTracksByGenre: (genreId, options = {}) => {
+    const params = new URLSearchParams();
+    if (options.limit) params.append('limit', options.limit);
+    if (options.offset) params.append('offset', options.offset);
+    
+    return api.get(`/free-music/genre/${genreId}?${params.toString()}`);
+  },
+
+  getAvailableServices: () => {
+    return api.get('/free-music/services');
+  },
+
+  getTrackDetails: (service, id) => {
+    return api.get(`/free-music/track/${service}/${id}`);
+  },
+
+  getGenres: () => {
+    return api.get('/free-music/genres');
+  },
+
+  multiServiceSearch: (query, options = {}) => {
+    const params = new URLSearchParams();
+    params.append('q', query);
+    if (options.limit) params.append('limit', options.limit);
+    
+    return api.get(`/free-music/multi-search?${params.toString()}`);
   },
 
   getSongById: (id) => api.get(`/songs/${id}`),

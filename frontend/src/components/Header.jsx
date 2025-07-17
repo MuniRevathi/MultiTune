@@ -1,7 +1,7 @@
 // src/components/Header.jsx
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Music, Search, Menu, X, Home, List, Globe, Info } from 'lucide-react';
+import { Music, Search, Menu, X, Home, List, Globe, Info, Radio } from 'lucide-react';
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -11,6 +11,7 @@ export const Header = () => {
     { name: 'Home', path: '/', icon: Home },
     { name: 'Songs', path: '/songs', icon: List },
     { name: 'Search', path: '/search', icon: Search },
+    { name: 'Free Music', path: '/free-music', icon: Radio },
     { name: 'Languages', path: '/languages', icon: Globe },
     { name: 'About', path: '/about', icon: Info },
   ];
