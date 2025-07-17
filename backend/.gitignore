@@ -1,0 +1,53 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Node modules
+**/node_modules
+
+# Environment variables
+**/.env
+**/.env.*.local
+**/.env.local
+**/.env.development.local
+**/.env.test.local
+**/.env.production.local
+
+# Build output
+**/build
+**/dist
+
+# System files
+.DS_Store
+Thumbs.db
+
+# OS-specific files
+*.swp
+.sass-cache
+.cache
+.vscode
+.idea
+
+# Testing
+coverage
+**/coverage
+
+# Optional: next.js/.turbo/CRA cache
+.next
+out
+.turbo
+.cache
+
+# Optional: ignore package-lock/yarn.lock if you're not using them
+# package-lock.json
+# yarn.lock
+
+# Logs for pm2 (if using)
+pids
+*.pid
+*.seed
+*.pid.lock
