@@ -5,7 +5,7 @@ import axios from 'axios';
 const getApiBaseUrl = () => {
   if (import.meta.env.PROD) {
     // Production environment - use your Render backend URL
-    return import.meta.env.VITE_API_BASE_URL || 'https://your-backend-name.onrender.com/api';
+    return import.meta.env.VITE_API_BASE_URL || 'https://multitune.onrender.com/api';
   } else {
     // Development environment
     return 'http://localhost:3000/api';
