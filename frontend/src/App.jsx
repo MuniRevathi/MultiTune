@@ -7,8 +7,6 @@ import { SongDetails } from './pages/SongDetails';
 import { Search } from './pages/Search';
 import { Languages } from './pages/Languages';
 import { About } from './pages/About';
-import FreeMusicBrowser from './components/FreeMusicBrowser';
-import FreeMusicDemo from './pages/FreeMusicDemo';
 
 function App() {
   return (
@@ -23,8 +21,6 @@ function App() {
             <Route path="/search" element={<Search />} />
             <Route path="/languages" element={<Languages />} />
             <Route path="/about" element={<About />} />
-            <Route path="/free-music" element={<FreeMusicBrowser />} />
-            <Route path="/free-music-demo" element={<FreeMusicDemo />} />
           </Routes>
         </main>
       </div>
