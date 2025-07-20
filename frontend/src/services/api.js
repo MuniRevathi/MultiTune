@@ -1,7 +1,18 @@
 // src/services/api.js
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:3000/api';
+// Determine API base URL based on environment
+const getApiBaseUrl = () => {
+  if (import.meta.env.PROD) {
+    // Production environment - use your Render backend URL
+    return import.meta.env.VITE_API_BASE_URL || 'https://your-backend-name.onrender.com/api';
+  } else {
+    // Development environment
+    return 'http://localhost:3000/api';
+  }
+};
+
+const API_BASE_URL = getApiBaseUrl();
 
 // Create axios instance with base configuration
 const api = axios.create({

@@ -1,8 +1,11 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "Multi-Language Song API Backend",
   "main": "server.js",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
@@ -10,7 +13,7 @@
     "test-apis": "node test-free-music-apis.js",
     "setup-demo": "node create-demo-env.js"
   },
-  "keywords": [],
+  "keywords": ["music", "api", "multilingual", "songs"],
   "author": "",
   "license": "ISC",
   "type": "commonjs",

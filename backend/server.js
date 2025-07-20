@@ -21,10 +21,23 @@ const PORT = config.port;
 app.use('/api/', createRateLimiter(100, 15 * 60 * 1000)); // 100 requests per 15 minutes
 
 // CORS configuration
+const allowedOrigins = [
+  config.corsOrigin,
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'https://localhost:5173'
+];
+
+// Add Vercel domains if in production
+if (config.nodeEnv === 'production') {
+  allowedOrigins.push(/\.vercel\.app$/);
+}
+
 app.use(cors({
-  origin: [config.corsOrigin, 'http://localhost:5173', 'http://localhost:3000'],
+  origin: allowedOrigins,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
 }));
 
 app.use(express.json());
